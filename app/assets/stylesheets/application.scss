@@ -1,0 +1,109 @@
+@import 'bourbon';
+@import 'neat';
+@import 'base/base';
+
+
+@import '_layout';
+@import '_login';
+
+
+body, h1, h2, h3, input[type=submit] {
+  font-family: 'Quicksand', sans-serif;
+}
+
+section.location {
+  .location-row {
+    @include display(flex);
+    @include align-items(center);
+
+    .map, .details {
+      @include flex(1);
+      width: 50%;
+      min-height: 100px;
+    }
+
+    .details p{
+      text-align: center;
+    }
+
+  }
+
+}
+
+
+hr {
+  border-bottom: thin solid lightgrey;
+  width: 50%;
+  margin: 2rem auto;
+  padding-top: 2rem;
+  clear: both;
+}
+
+h2{
+  margin-bottom: 3rem;
+}
+
+h3{
+  font-weight: normal;
+  font-size: 1.25rem;
+}
+
+.attendees-form {
+  min-height: 100px;
+  padding: 2rem 5rem;
+
+  .field-row {
+    @include span-columns(12);
+  }
+
+  .name, .status {
+    font-size: 2rem;
+    font-weight: 200;
+    padding: 0;
+    margin: 0;
+  }
+
+  .name {
+    @include span-columns(7);
+  }
+
+  .attending {
+    margin-top: 7px;
+    @include span-columns(1);
+  }
+
+  .status {
+    @include span-columns(4);
+    text-align: right;
+  }
+
+
+  input[type=submit] {
+    display: block;
+    margin: 3rem auto 0 auto;
+  }
+
+  .saved {
+    text-align: center;
+    font-weight: 500;
+    color: green;
+    font-size: 1.5rem;
+    padding: 1rem 0 0 0;
+
+    visibility: hidden;
+  	opacity:0;
+    -webkit-transition: all 500ms ease-in-out;
+       -moz-transition: all 500ms ease-in-out;
+        -ms-transition: all 500ms ease-in-out;
+         -o-transition: all 500ms ease-in-out;
+            transition: all 500ms ease-in-out;
+
+
+  }
+
+  .saved.open {
+    visibility: visible;
+  	opacity: 1;
+
+  }
+}

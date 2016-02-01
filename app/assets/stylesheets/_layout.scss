@@ -1,0 +1,36 @@
+body {
+  background: image-url('proposal.jpg') no-repeat top center fixed;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+h1, h2, h3, h4, h5 {
+  text-align: center;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+
+#content {
+  @include outer-container;
+
+  background: rgba(255,255,255,.95);
+  padding: 2rem;
+  margin-top: 4rem;
+}
+
+
+
+hr {
+  margin-top: 1rem;
+}

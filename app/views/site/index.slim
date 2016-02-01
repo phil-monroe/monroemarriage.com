@@ -1,0 +1,8 @@
+section
+  h1 Kristin Fugitt & Phil Monroe
+  h2 October 1st, 2016
+
+section
+  = form_tag login_path, class: 'login' do
+    = text_field_tag :rsvp_code, nil, placeholder: 'RSVP Code'
+    = submit_tag 'RSVP'

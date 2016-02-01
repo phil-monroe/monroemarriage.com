@@ -1,0 +1,43 @@
+form.login {
+  margin: auto;
+  display: block;
+  width: 300px;
+  $base-spacing: 1.5em !default;
+  $base-border-color: gainsboro !default;
+  $base-line-height: 1.5em !default;
+
+  $search-bar-border-color: $base-border-color;
+  $search-bar-border: 1px solid $search-bar-border-color;
+  $search-bar-background: lighten($search-bar-border-color, 10%);
+
+  position: relative;
+
+  input[type=text] {
+    @include appearance(none);
+    @include transition(border-color);
+    background-color: white;
+    border: 1px solid $base-border-color;
+    box-sizing: border-box;
+    display: block;
+    font-size: 1em;
+    font-style: italic;
+    margin: 0;
+    padding: ($base-spacing / 3) ($base-spacing / 3);
+    position: relative;
+    width: 100%;
+  }
+
+  input[type=submit] {
+    @include position(absolute, 0em 0em 0em null);
+    outline: none;
+    padding: 5px 10px;
+
+    @include border-right-radius(5px);
+    @include border-left-radius(0);
+
+    img {
+      height: 12px;
+      opacity: 0.7;
+    }
+  }
+}
