@@ -15,14 +15,15 @@ section.location {
   .location-row {
     @include display(flex);
     @include align-items(center);
+    @include justify-content(center);
 
     .map, .details {
-      @include flex(1);
-      width: 50%;
+      margin: 0 2rem;
       min-height: 100px;
     }
 
-    .details p{
+    .details{
+      min-width: 150px;
       text-align: center;
     }
 
