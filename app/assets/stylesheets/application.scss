@@ -7,19 +7,37 @@
 @import '_login';
 
 
+$break: 800px;
+$mobile:  new-breakpoint(max-width $break 12);
+$desktop: new-breakpoint(min-width $break 12);
+
+
 body, h1, h2, h3, input[type=submit] {
   font-family: 'Quicksand', sans-serif;
 }
 
 section.location {
+  @include media($mobile) {
+    iframe {
+      display: none;
+      height: 0;
+      width: 0;
+    }
+  }
+
   .location-row {
     @include display(flex);
     @include align-items(center);
     @include justify-content(center);
+    @include flex-wrap(wrap);
+
+    @include media($mobile) {
+      @include align-items(top);
+    }
+
 
     .map, .details {
       margin: 0 2rem;
-      min-height: 100px;
     }
 
     .details{
@@ -35,13 +53,16 @@ section.location {
 hr {
   border-bottom: thin solid lightgrey;
   width: 50%;
-  margin: 2rem auto;
+  margin: 0 auto 2rem auto;
   padding-top: 2rem;
   clear: both;
 }
 
 h2{
   margin-bottom: 3rem;
+  @include media($mobile) {
+    margin-bottom: 1rem;
+  }
 }
 
 h3{
@@ -50,11 +71,11 @@ h3{
 }
 
 .attendees-form {
-  min-height: 100px;
-  padding: 2rem 5rem;
-
-  .field-row {
-    @include span-columns(12);
+  @include media($mobile) {
+    text-align: center;
+  }
+  @include media($desktop) {
+    padding: 2rem 5rem;
   }
 
   .name, .status {
@@ -65,17 +86,34 @@ h3{
   }
 
   .name {
-    @include span-columns(7);
+    @include media($mobile) {
+      @include span-columns(12);
+    };
+
+    @include media($desktop) {
+      @include span-columns(7);
+    };
   }
 
   .attending {
     margin-top: 7px;
-    @include span-columns(1);
+    @include media($mobile) {
+      @include span-columns(12);
+    }
+    @include media($desktop) {
+      @include span-columns(1);
+    }
   }
 
   .status {
-    @include span-columns(4);
-    text-align: right;
+    @include media($mobile) {
+      @include span-columns(12);
+      font-size: .9rem;
+      margin-bottom: 1rem;
+    }
+    @include media($desktop) {
+      @include span-columns(4);
+    }
   }
 
 
@@ -105,6 +143,5 @@ h3{
   .saved.open {
     visibility: visible;
   	opacity: 1;
-
   }
 }
