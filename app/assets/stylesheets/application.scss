@@ -38,10 +38,10 @@ section.location {
 
     .map, .details {
       margin: 0 2rem;
+      @include flex(1 1 0)
     }
 
     .details{
-      min-width: 150px;
       text-align: center;
     }
 
