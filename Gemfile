@@ -16,6 +16,8 @@ gem 'slim-rails'
 gem 'bourbon'
 gem 'neat'
 
+gem 'gibbon'
+
 group :development, :test do
   gem 'pry-rails'
   gem 'foreman', require: false
