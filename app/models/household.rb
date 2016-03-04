@@ -6,6 +6,9 @@ class Household < ActiveRecord::Base
   scope :reception_only, ->{ where(reception_only: true) }
   scope :with_attendees, ->{ distinct.joins(:people).where(people: { attending: true } ) }
 
+  scope :have_responded, ->{ where.not(logged_in_at: nil) }
+  scope :have_not_responded, ->{ where(logged_in_at: nil) }
+
   after_initialize do
     self.rsvp_code ||= SecureRandom.hex(3)
   end

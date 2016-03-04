@@ -7,6 +7,8 @@ ActiveAdmin.register Household do
   scope :wedding
   scope :reception_only
   scope :with_attendees
+  scope :have_responded
+  scope :have_not_responded
 
   index do
     selectable_column
@@ -25,7 +27,6 @@ ActiveAdmin.register Household do
     column :rsvp_code
 
     actions
-    # column "My Custom Title", :title
   end
 
 
@@ -87,6 +88,7 @@ ActiveAdmin.register Household do
           attributes_table_for household do
             row :rsvp_code
             row :reception_only
+            row :logged_in_at
           end
         end
 

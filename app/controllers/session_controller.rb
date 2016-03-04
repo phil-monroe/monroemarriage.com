@@ -4,6 +4,7 @@ class SessionController < ApplicationController
 
     if household.present?
       session[:household_id] = household.id
+      household.touch :logged_in_at
       redirect_to rsvp_path
 
     else
