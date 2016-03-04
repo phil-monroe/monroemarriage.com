@@ -1,9 +1,9 @@
 class CreateHouseholds < ActiveRecord::Migration
   def change
     create_table :households do |t|
-      t.string :name, null: false
-      t.string :email, null: false
-      t.string :phone, null: false
+      t.string :name
+      t.string :email
+      t.string :phone
 
       t.string :address_1
       t.string :address_2

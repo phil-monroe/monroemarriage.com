@@ -2,6 +2,7 @@ class Household < ActiveRecord::Base
   has_many :people, -> { order('position') }
   accepts_nested_attributes_for :people
 
+  scope :wedding,        ->{ where(reception_only: false) }
   scope :reception_only, ->{ where(reception_only: true) }
   scope :with_attendees, ->{ distinct.joins(:people).where(people: { attending: true } ) }
 

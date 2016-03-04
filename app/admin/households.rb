@@ -4,6 +4,7 @@ ActiveAdmin.register Household do
   config.sort_order = 'id_asc'
 
   scope :all
+  scope :wedding
   scope :reception_only
   scope :with_attendees
 
