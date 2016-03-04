@@ -10,7 +10,6 @@ class SiteController < ApplicationController
 
   def rsvp
     @people = current_household.people.order('first_name')
-
   end
 
   def update_rsvp
