@@ -1,6 +1,6 @@
 section
   h1= current_household.name
-  = form_tag '#', class: 'attendees-form', method: :put, remote: true  do
+  = form_tag rsvp_path, class: 'attendees-form', method: :put, remote: true  do
     - current_household.people.each do |person|
       .field-row
         .name= person.name
@@ -14,6 +14,46 @@ section
       | RSVP Updated. Thanks!
 
 hr
+
+section
+  h2 Your Contact Information
+  = form_for current_household, url: rsvp_path, class: 'contact-info', remote: true  do |f|
+    .field-row
+      = f.label :email
+      = f.text_field :email
+
+    .field-row
+      = f.label :phone
+      = f.text_field :phone
+
+    .field-row
+      = f.label :address_1
+      = f.text_field :address_1
+
+    .field-row
+      = f.label :address_2
+      = f.text_field :address_2
+
+    .field-row
+      = f.label :city
+      = f.text_field :city
+
+    .field-row
+      = f.label :state
+      = f.text_field :state
+
+    .field-row
+      = f.label :zipcode, "Postal Code"
+      = f.text_field :zipcode
+
+    .field-row.actions
+      = f.submit "Save Contact Info"
+
+    .field-row.saved
+      | Contact information saved. Thanks!
+
+hr
+
 
 
 - unless current_household.reception_only

@@ -5,17 +5,19 @@ class SiteController < ApplicationController
     redirect_to rsvp_path if current_household.present?
   end
 
-
-
-
   def rsvp
     @people = current_household.people.order('first_name')
   end
 
   def update_rsvp
     ActiveRecord::Base.transaction do
-      current_household.people.update_all attending: false
-      current_household.people.where(id: params["attendees"]).update_all attending: true
+      if params[:commit] == "Save Contact Info"
+        current_household.update_attributes! params.require(:household).permit(:email, :phone, :address_1, :address_2, :city, :state, :zipcode)
+
+      else
+        current_household.people.update_all attending: false
+        current_household.people.where(id: params["attendees"]).update_all attending: true
+      end
     end
 
     render nothing: true

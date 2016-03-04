@@ -121,7 +121,19 @@ h3{
     display: block;
     margin: 3rem auto 0 auto;
   }
+}
 
+
+form.edit_household {
+  margin: auto;
+  max-width: 500px;
+
+  .field-row.actions {
+    text-align: center;
+  }
+}
+
+form {
   .saved {
     text-align: center;
     font-weight: 500;

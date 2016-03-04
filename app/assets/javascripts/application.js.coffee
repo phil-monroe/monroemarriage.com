@@ -25,9 +25,20 @@ $(document).on 'ready page:load', ->
   $('form.attendees-form').on 'ajax:success', ->
     clearTimeout(window.savedTimeout)
 
-    $('.saved').addClass('open')
+    $('form.attendees-form .saved').addClass('open')
 
     close = ->
-      $('.saved').removeClass('open')
+      $('form.attendees-form .saved').removeClass('open')
 
     window.savedTimeout = setTimeout close, 3000
+
+
+  $('form.edit_household').on 'ajax:success', ->
+    clearTimeout(window.updatedTimeout)
+
+    $('form.edit_household .saved').addClass('open')
+
+    close = ->
+      $('form.edit_household .saved').removeClass('open')
+
+    window.updatedTimeout = setTimeout close, 3000

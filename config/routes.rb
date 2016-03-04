@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get  '/logout' => 'session#destroy'
 
   get '/rsvp' => 'site#rsvp'
-  put '/rsvp' => 'site#update_rsvp'
+  match '/rsvp' => 'site#update_rsvp', via: [:put, :patch]
 
   root to: 'site#index'
 end
