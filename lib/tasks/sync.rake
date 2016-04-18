@@ -16,13 +16,13 @@ namespace :sync do
         },
         interests: {
           #has responded
-          '5007773727': household.logged_in_at.present?,
+          '71e9b4495a': household.logged_in_at.present?,
 
           #reception_only
-          '04057248dd': household.reception_only,
+          '123757e747': household.reception_only,
 
           #attending
-          '5a9dc7441e': household.people.where(attending: true).exists?
+          '1ed3aa91e2': household.people.where(attending: true).exists?
         }
       }
 
