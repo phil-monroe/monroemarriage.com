@@ -1,0 +1,58 @@
+#!/usr/bin/env ruby
+
+require_relative '../config/environment'
+
+Email = Struct.new :id, :name, :email
+
+$data = CSV.read("contacts.csv", headers: true).each_with_index.map do |row, id|
+  name = [row['first_name'], row['last_name']].join(' ').strip.downcase
+  email = [row['email'], row['email_1'], row['email_2'], row['email_3'], row['email_4'], row['email_5'], row['email_6']].find { |e| e.present? }
+  Email.new(id, name, email)
+end.compact
+
+def search tokens
+  results = Hash.new(0)
+  tokens.uniq.map do |token|
+    $data.select{|e| e.name =~ /#{token}/ }.map {|e| results[e] += 1 }
+  end
+  results.to_a.sort_by{ |r| -r.last }.map(&:first)
+end
+
+
+Household.reception_only.where(email: nil).order(:id).each do |house|
+  system "clear"
+  puts house.name
+  puts '-'*house.name.size
+  tokens = []
+
+  puts "People:"
+  house.people.each do |person|
+    name = [person.first_name, person.last_name].compact.map(&:downcase).map(&:strip)
+    tokens.concat name
+    puts "  - #{name.join(' ')}"
+  end
+
+  puts
+  puts "Searching Emails with names: #{tokens}"
+  search(tokens).each do |email|
+    puts "  - #{email.name} : #{email.email}"
+  end
+
+  puts "\nemail : #{house.email}"
+
+  print "\nnew email: "
+  input = gets.chomp
+
+  if input.present?
+    house.email = input
+    house.save!
+
+    puts "saved!"
+
+  else
+    puts "skipped"
+  end
+
+  sleep 1
+  puts "\n\n\n"
+end
