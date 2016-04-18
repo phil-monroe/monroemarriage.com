@@ -11,7 +11,8 @@ namespace :sync do
         email_address: household.email,
         status:        "subscribed",
         merge_fields: {
-          NAME: household.name
+          NAME:      household.name,
+          RSVP_CODE: household.rsvp_code
         },
         interests: {
           #has responded
