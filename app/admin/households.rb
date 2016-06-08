@@ -29,6 +29,14 @@ ActiveAdmin.register Household do
     actions
   end
 
+  csv do
+    column :id
+    column :name
+    column :email
+    column :people do |house|
+      house.people.map(&:name).join(", ")
+    end
+  end
 
 
   form do |f|
