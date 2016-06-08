@@ -9,6 +9,8 @@ class Household < ActiveRecord::Base
   scope :have_responded, ->{ where.not(logged_in_at: nil) }
   scope :have_not_responded, ->{ where(logged_in_at: nil) }
 
+  scope :need_to_contact, -> { have_not_responded.where(email: nil) }
+
   after_initialize do
     self.rsvp_code ||= SecureRandom.hex(3)
   end

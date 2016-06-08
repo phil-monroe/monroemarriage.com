@@ -9,6 +9,7 @@ ActiveAdmin.register Household do
   scope :with_attendees
   scope :have_responded
   scope :have_not_responded
+  scope :need_to_contact
 
   index do
     selectable_column
