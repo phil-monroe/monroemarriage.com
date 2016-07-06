@@ -102,13 +102,39 @@ ActiveAdmin.register Household do
           end
         end
       end
+
+
       column do
         panel "Wedding Details" do
           attributes_table_for household do
+
+            def toggle_timestamp household, method
+              timestamp = household.send(method)
+              toggle_path = toggle_timestamp_admin_household_path(household, timestamp: method)
+              if timestamp.present?
+                link_to(content_tag(:span, "Yes", class: "status_tag yes"), toggle_path) + " "+ I18n.l(timestamp, format: :long)
+              else
+                link_to(content_tag(:span, "No", class: "status_tag no"), toggle_path)
+              end.html_safe
+            end
+
             row :rsvp_code
             row :reception_only
+
             row "Responded" do |household|
-              I18n.l(household.logged_in_at) if household.logged_in_at.present?
+              toggle_timestamp household, :logged_in_at
+            end
+            row :save_the_date_email_sent do |household|
+              toggle_timestamp household, :save_the_date_email_sent_at
+            end
+            row :save_the_date_paper_sent do |household|
+              toggle_timestamp household, :save_the_date_paper_sent_at
+            end
+            row :invite_email_sent do |household|
+              toggle_timestamp household, :invite_email_sent_at
+            end
+            row :invite_paper_sent do |household|
+              toggle_timestamp household, :invite_paper_sent_at
             end
           end
         end
@@ -120,25 +146,22 @@ ActiveAdmin.register Household do
           end
         end
       end
+
     end
 
 
     active_admin_comments
   end
 
+  member_action :toggle_timestamp do
+    timestamp = params[:timestamp].to_sym
 
-  action_item :toggle_logged_in, only: :show do
-    link_to "Toggle Responded", toggle_logged_in_admin_household_path(resource)
-  end
-
-  member_action :toggle_logged_in do
-    if resource.logged_in_at.present?
-      resource.logged_in_at = nil
+    if resource.send(timestamp).present?
+      resource.update_attributes!(timestamp => nil)
     else
-      resource.touch :logged_in_at
+      resource.update_attributes!(timestamp => Time.current)
     end
 
-    resource.save!
     redirect_to :back
   end
 end

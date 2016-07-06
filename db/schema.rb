@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160304050053) do
+ActiveRecord::Schema.define(version: 20160706061300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,13 +40,17 @@ ActiveRecord::Schema.define(version: 20160304050053) do
     t.string   "city"
     t.string   "state"
     t.string   "zipcode"
-    t.string   "rsvp_code",                      null: false
-    t.boolean  "has_responded",  default: false, null: false
-    t.boolean  "reception_only", default: true,  null: false
+    t.string   "rsvp_code",                                   null: false
+    t.boolean  "has_responded",               default: false, null: false
+    t.boolean  "reception_only",              default: true,  null: false
     t.text     "comments"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.datetime "logged_in_at"
+    t.datetime "save_the_date_email_sent_at"
+    t.datetime "save_the_date_paper_sent_at"
+    t.datetime "invite_email_sent_at"
+    t.datetime "invite_paper_sent_at"
   end
 
   create_table "people", force: :cascade do |t|
