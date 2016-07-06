@@ -16,13 +16,22 @@ ActiveAdmin.register Household do
     column :name do |household|
       link_to household.name, admin_household_path(household)
     end
-    column 'Members' do |household|
+    column "People" do |household|
+      household.people.map(&:first_name).to_sentence
+    end
+    column 'Count' do |household|
       household.people.count
     end
     column 'Attending Members' do |household|
       household.people.where(attending: true).count
     end
-
+    column "Responded" do |household|
+      if household.logged_in_at.present?
+        status_tag "Yes"
+      else
+        status_tag "No"
+      end
+    end
     column :email
     column :phone
     column :rsvp_code
