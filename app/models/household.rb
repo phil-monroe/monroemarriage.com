@@ -24,7 +24,7 @@ class Household < ActiveRecord::Base
         nil
 
       else
-        person.assign_attributes  person_attrs.slice(:first_name, :last_name, :position)
+        person.assign_attributes  person_attrs.slice(:first_name, :last_name, :attending, :position)
         person.save
         person
       end

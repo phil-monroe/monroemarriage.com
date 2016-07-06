@@ -1,5 +1,5 @@
 ActiveAdmin.register Household do
-  permit_params :name, :email, :phone, :address_1, :address_2, :city, :state, :zipcode, :has_responded, :reception_only, :rsvp_code, people_attributes: [:id, :first_name, :last_name, :position, :_destroy]
+  permit_params :name, :email, :phone, :address_1, :address_2, :city, :state, :zipcode, :has_responded, :reception_only, :rsvp_code, people_attributes: [:id, :first_name, :last_name, :position, :_destroy, :attending]
 
   config.sort_order = 'id_asc'
 
@@ -75,6 +75,7 @@ ActiveAdmin.register Household do
       f.has_many :people, sortable: :position, allow_destroy: true  do |t|
         t.input :first_name
         t.input :last_name
+        t.input :attending
       end
     end
 
@@ -106,7 +107,9 @@ ActiveAdmin.register Household do
           attributes_table_for household do
             row :rsvp_code
             row :reception_only
-            row :logged_in_at
+            row "Responded" do |household|
+              I18n.l(household.logged_in_at) if household.logged_in_at.present?
+            end
           end
         end
 
@@ -121,5 +124,21 @@ ActiveAdmin.register Household do
 
 
     active_admin_comments
+  end
+
+
+  action_item :toggle_logged_in, only: :show do
+    link_to "Toggle Responded", toggle_logged_in_admin_household_path(resource)
+  end
+
+  member_action :toggle_logged_in do
+    if resource.logged_in_at.present?
+      resource.logged_in_at = nil
+    else
+      resource.touch :logged_in_at
+    end
+
+    resource.save!
+    redirect_to :back
   end
 end
