@@ -1,5 +1,5 @@
 ActiveAdmin.register Household do
-  permit_params :name, :email, :phone, :address_1, :address_2, :city, :state, :zipcode, :has_responded, :reception_only, :rsvp_code, people_attributes: [:id, :first_name, :last_name, :position, :_destroy, :attending]
+  permit_params :name, :email, :phone, :address_1, :address_2, :city, :state, :zipcode, :has_responded, :reception_only, :rsvp_code, people_attributes: [:id, :first_name, :last_name, :position, :_destroy]
 
   config.sort_order = 'id_asc'
 
@@ -75,7 +75,6 @@ ActiveAdmin.register Household do
       f.has_many :people, sortable: :position, allow_destroy: true  do |t|
         t.input :first_name
         t.input :last_name
-        t.input :attending
       end
     end
 
@@ -142,7 +141,16 @@ ActiveAdmin.register Household do
         panel "Members" do
           table_for household.people do
             column :name
-            column :attending
+            column :attending do |person|
+              label = person.attending ? "yes" : "no"
+              link_to(content_tag(:span, label, class: [:status_tag, label]), toggle_boolean_admin_person_path(person, field: :attending))
+            end
+
+            column :alcohol do |person|
+              label = person.drinks_alcohol ? "yes" : "no"
+              link_to(content_tag(:span, label, class: [:status_tag, label]), toggle_boolean_admin_person_path(person, field: :drinks_alcohol))
+            end
+
           end
         end
       end

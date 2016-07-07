@@ -14,4 +14,13 @@ ActiveAdmin.register Person do
 
     actions
   end
+
+
+  member_action :toggle_boolean do
+    field = params[:field].to_sym
+
+    resource.update_attribute field, !resource.send(field)
+
+    redirect_to :back
+  end
 end
