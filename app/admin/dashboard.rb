@@ -34,7 +34,7 @@ ActiveAdmin.register_page "Dashboard" do
             :Invited             => Person.count,
             :Attending_Wedding   => Person.invited_to_wedding.attending.count,
             :Attending_Reception => Person.attending.count,
-            :Drinking_Alcohol    => Person.drinkers.count,
+            :Drinking_Alcohol    => Person.attending.drinkers.count,
           })
 
           para do
