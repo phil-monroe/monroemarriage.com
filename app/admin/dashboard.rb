@@ -3,22 +3,55 @@ ActiveAdmin.register_page "Dashboard" do
   menu priority: 1, label: proc{ I18n.t("active_admin.dashboard") }
 
   content do
-    columns span: 4 do
-      column do
-        panel "Info" do
-          attributes_table_for 1 do
-            row("# Households")                 { Household.count }
-            row("# Households Responded")       { Household.have_responded.count }
-            row("# Households Not Responded")   { Household.have_not_responded.count }
+    columns do
+      column span: 1 do
+        panel "Households" do
+          counts = OpenStruct.new({
+            :Invited             => Household.count,
+            :Responded           => Household.have_responded.count,
+            :Not_Responded       => Household.have_not_responded.count,
+            :Should_Contact      => Household.need_to_contact.count
+          })
 
-            row("# People")                     { Person.count }
-            row("# People Attending Wedding")   { Person.attending_wedding.count }
-            row("# People Attending Reception") { Person.attending_reception.count }
+          para do
+            attributes_table_for counts do
+              row :Invited
+              row :Responded
+              row :Not_Responded
+              row :Should_Contact
+            end
+          end
+
+          para do
+            pie_chart(counts.to_h.slice(:Responded, :Not_Responded))
           end
         end
       end
-      column
-      column
+
+      column span: 4 do
+        panel "People" do
+          counts = OpenStruct.new({
+            :Invited             => Person.count,
+            :Attending_Wedding   => Person.invited_to_wedding.attending.count,
+            :Attending_Reception => Person.attending.count,
+            :Drinking_Alcohol    => Person.drinkers.count,
+          })
+
+          para do
+            attributes_table_for counts do
+              row :Invited
+              row :Attending_Wedding
+              row :Attending_Reception
+              row :Drinking_Alcohol
+            end
+          end
+
+          para do
+            bar_chart(counts.to_h)
+          end
+        end
+
+      end
     end
   end
 end

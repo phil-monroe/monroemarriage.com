@@ -15,6 +15,7 @@ gem 'slim-rails'
 
 gem 'bourbon'
 gem 'neat'
+gem "chartkick"
 
 gem 'gibbon'
 
