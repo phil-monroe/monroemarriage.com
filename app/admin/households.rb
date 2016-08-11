@@ -41,11 +41,17 @@ ActiveAdmin.register Household do
 
   csv do
     column :id
-    column :name
-    column :email
     column :people do |house|
       house.people.map(&:name).join(", ")
     end
+    column :name
+    column :address_1
+    column :address_2
+    column :city
+    column :state
+    column(:country) { "USA" }
+    column :zipcode
+    column :email
   end
 
 
