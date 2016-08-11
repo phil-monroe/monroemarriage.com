@@ -32,6 +32,14 @@ ActiveAdmin.register Household do
         status_tag "No"
       end
     end
+
+    column "Address" do |household|
+      present = [household.address_1, household.address_2, household.city, household.state, household.zipcode].any?(&:present?)
+      tag = present ? "Yes" : "No"
+      status_tag tag
+    end
+
+
     column :email
     column :phone
     column :rsvp_code
