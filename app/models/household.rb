@@ -11,6 +11,8 @@ class Household < ActiveRecord::Base
 
   scope :need_to_contact, -> { have_not_responded.where(email: nil) }
 
+  scope :physical_invite, -> { where(physical_invite: true) }
+
   after_initialize do
     self.rsvp_code ||= SecureRandom.hex(3)
   end

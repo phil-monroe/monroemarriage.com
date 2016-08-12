@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160707022334) do
+ActiveRecord::Schema.define(version: 20160812005427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20160707022334) do
     t.datetime "save_the_date_paper_sent_at"
     t.datetime "invite_email_sent_at"
     t.datetime "invite_paper_sent_at"
+    t.boolean  "physical_invite",             default: false
   end
 
   create_table "people", force: :cascade do |t|

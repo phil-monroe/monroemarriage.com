@@ -10,6 +10,7 @@ ActiveAdmin.register Household do
   scope :have_responded
   scope :have_not_responded
   scope :need_to_contact
+  scope :physical_invite
 
   index do
     selectable_column
@@ -121,6 +122,17 @@ ActiveAdmin.register Household do
         panel "Wedding Details" do
           attributes_table_for household do
 
+            def toggle_boolean household, method
+              value = household.send(method)
+              toggle_path = toggle_boolean_admin_household_path(household, boolean: method)
+              if value.present?
+                link_to(content_tag(:span, "Yes", class: "status_tag yes"), toggle_path)
+              else
+                link_to(content_tag(:span, "No", class: "status_tag no"), toggle_path)
+              end.html_safe
+            end
+
+
             def toggle_timestamp household, method
               timestamp = household.send(method)
               toggle_path = toggle_timestamp_admin_household_path(household, timestamp: method)
@@ -132,7 +144,13 @@ ActiveAdmin.register Household do
             end
 
             row :rsvp_code
-            row :reception_only
+            row :reception_only do
+              toggle_boolean household, :reception_only
+            end
+
+            row :physical_invite do
+              toggle_boolean household, :physical_invite
+            end
 
             row "Responded" do |household|
               toggle_timestamp household, :logged_in_at
@@ -182,6 +200,18 @@ ActiveAdmin.register Household do
       resource.update_attributes!(timestamp => nil)
     else
       resource.update_attributes!(timestamp => Time.current)
+    end
+
+    redirect_to :back
+  end
+
+  member_action :toggle_boolean do
+    method = params[:boolean].to_sym
+
+    if resource.send(method).present?
+      resource.update_attributes!(method => false)
+    else
+      resource.update_attributes!(method => true)
     end
 
     redirect_to :back
