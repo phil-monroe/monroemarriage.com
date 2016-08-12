@@ -20,12 +20,11 @@ ActiveAdmin.register Household do
     column "People" do |household|
       household.people.map(&:first_name).to_sentence
     end
-    column 'Count' do |household|
-      household.people.count
-    end
     column 'Attending Members' do |household|
       household.people.where(attending: true).count
     end
+    column(:wedding) { |household| status_tag(!household.reception_only) }
+    column(:physical_invite)
     column "Responded" do |household|
       if household.logged_in_at.present?
         status_tag "Yes"
