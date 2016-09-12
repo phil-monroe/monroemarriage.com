@@ -5,10 +5,10 @@ namespace :sync do
     mailchimp = Gibbon::Request.new
 
     households = Household.where("email <> ''").map do |household|
-      email_id = Digest::MD5.hexdigest(household.email.downcase)
+      email_id = Digest::MD5.hexdigest(household.email.downcase.strip)
 
       details = {
-        email_address: household.email.downcase,
+        email_address: household.email.downcase.strip,
         status:        "subscribed",
         merge_fields: {
           NAME:      household.name,
