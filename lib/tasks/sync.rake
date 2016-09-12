@@ -8,7 +8,7 @@ namespace :sync do
       email_id = Digest::MD5.hexdigest(household.email.downcase)
 
       details = {
-        email_address: household.email,
+        email_address: household.email.downcase,
         status:        "subscribed",
         merge_fields: {
           NAME:      household.name,
