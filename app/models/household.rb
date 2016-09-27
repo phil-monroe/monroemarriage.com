@@ -13,6 +13,8 @@ class Household < ActiveRecord::Base
 
   scope :physical_invite, -> { where(physical_invite: true) }
 
+  scope :attending_wedding, ->{ wedding.with_attendees }
+
   after_initialize do
     self.rsvp_code ||= SecureRandom.hex(3)
   end

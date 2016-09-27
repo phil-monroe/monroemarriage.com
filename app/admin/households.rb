@@ -11,6 +11,7 @@ ActiveAdmin.register Household do
   scope :have_not_responded
   scope :need_to_contact
   scope :physical_invite
+  scope :attending_wedding
 
   index do
     selectable_column
@@ -52,9 +53,9 @@ ActiveAdmin.register Household do
       house.people.map(&:name).join(", ")
     end
     column :name
-    column :city
-    column :state
-    column :rsvp_code
+    column :count do |household|
+      household.people.where(attending: true).count
+    end
   end
 
 
