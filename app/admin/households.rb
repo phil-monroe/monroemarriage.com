@@ -49,12 +49,55 @@ ActiveAdmin.register Household do
   end
 
   csv do
-    column :people do |house|
-      house.people.map(&:name).join(", ")
+    column "tmp" do |house|
+      house.people.map(&:first_name).join(", ")
     end
-    column :name
-    column :count do |household|
-      household.people.where(attending: true).count
+
+    column "Name" do |house|
+      people = house.people.to_a
+      if house.people.size > 2
+        house.name
+
+      elsif people.size == 2
+        a, b = people
+
+        if a.last_name == b.last_name
+          "#{a.first_name} and #{b.name}"
+        else
+          "#{a.name} and #{b.name}"
+        end
+
+      elsif people.size == 1
+        people[0].name
+      end
+    end
+
+    column "Street Address 1" do |house|
+      house.address_1
+    end
+
+    column "Street Address 2 (Optional)" do |house|
+      house.address_2
+    end
+
+    column "City" do |house|
+      house.city
+    end
+
+    column "State/Region" do |house|
+      house.state
+    end
+
+    column "Country" do |house|
+      "USA"
+    end
+
+    column "Zip/Postal code" do |house|
+      house.zipcode
+    end
+
+    column "Email (Optional)" do |house|
+      house.email
     end
   end
 
